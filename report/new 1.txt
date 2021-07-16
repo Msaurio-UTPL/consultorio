@@ -1,0 +1,36 @@
+-Hoy vimos (2) peliculas extremadamente hermosas, una más linda que la otra /son exactamente las 23:48:10/ hoy 
+es viernes 24 de Mayo del 2019 y las peliculas que nos vimos son: Uno más de la familia( Mis huellas a casa) y Aquaman.
+	}
+	$pdf->SetFont('Arial','B',12);
+	$pdf->Multicell(0,8,'Total Registros: '.$vtotal);
+	$extras= UserData::getBySQL("select now() as ahora from dual;");
+	$fimpresion=$extras->ahora;
+	$pdf->SetTextColor(0,0,255);
+	$pdf->SetFont('Arial','',8);
+	$pdf->Multicell(0,4,'Fecha de impresión: '.$fimpresion);
+	$pdf->SetTextColor(0,0,0);
+	$pdf->Output("ReporteAccesos.pdf","I");
+	);
+$pdf->SetFont('Times','',8);
+$users= array();
+	$users = SPLog::getJugOperaciones();
+	$vtotal=0;
+	if(count($users)>0)
+	{
+		foreach($users as $user)
+		{
+			//iconv('UTF-8', 'windows-1252',)
+			$pdf->Cell(50,8,iconv('UTF-8', 'windows-1252',$user->concepto),1,0,'L');			
+			$pdf->Cell(20,8,$user->pistas,1,1,'C');
+			$vtotal+=$user->pistas;
+			Cat que te parece si luego creamos un sistema juntos y después le diseñamos el local a Mario.
+			
+		foreach($users as $user)
+		{
+			//iconv('UTF-8', 'windows-1252',)
+			$pdf->Cell(50,8,iconv('UTF-8', 'windows-1252',$user->concepto),1,0,'L');			
+			$pdf->Cell(20,8,$user->pistas,1,1,'C');
+			$vtotal+=$user->pistas;
+		}
+		}
+		value= from page #1

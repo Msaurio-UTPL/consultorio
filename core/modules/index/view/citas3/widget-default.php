@@ -1,0 +1,84 @@
+<?php
+$u=null;
+if(Session::getUID()!="")
+{
+	$u = SPUser::getById(Session::getUID());
+	$user = $u->usuCodUsuario;
+	$rol=$u->detIdRol;
+	if ($rol=='1' or $rol=='2' or $rol=='3')
+	{
+		$fecha = $_POST["citFecha"];
+		//echo $fecha;
+		$medico = SPMedico::getByIdSec($_GET["id2"]);
+		$paciente = SPBasica::getInfoByIdSec($_GET["id"]);
+		$centro = SPUser::getCentro($user);
+		$centrod = SPCentro::getById($centro->centro_cenIdCentro);
+	?>
+	<div class="row">
+		<div class="col-md-12">
+		<h3>Agendamiento de Citas</h3>
+		<form class="form-horizontal" method="post" id="addproduct" action="index.php?view=anadircita" role="form">
+			<div class="form-group">
+				<label for="inputEmail1" class="col-lg-2 control-label">Centro:*</label>
+				<div class="col-md-4">
+					<input type="text" readonly name="cenDescripcion" value="<?php echo $centrod->cenDescripcion; ?>" class="form-control" id="cenDescripcion" placeholder="Centro">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputEmail1" class="col-lg-2 control-label">Paciente:*</label>
+				<div class="col-md-4">
+					<input type="text" readonly name="pacApellidos" value="<?php echo $paciente->pacApellidos; echo " "; echo $paciente->pacNombres; ?>" class="form-control" id="pacApellidos" placeholder="Paciente">
+				</div>
+			</div>			
+			<div class="form-group">
+				<label for="inputEmail1" class="col-lg-2 control-label">Médico:*</label>
+				<div class="col-md-4">
+					<input type="text" readonly name="medIdMedico" value="<?php echo $medico->medApellidos; echo " "; echo $medico->medNombres; ?>" class="form-control" id="medIdMedico" placeholder="Medico">
+				</div>
+			</div>	
+			<div class="form-group">
+				<label for="inputEmail1" class="col-lg-2 control-label">Fecha:*</label>
+				<div class="col-md-4">
+					<input type="date" name="citFecha" readonly value="<?php echo $fecha; ?>" class="form-control" id="citFecha" placeholder="Fecha">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputEmail1" class="col-lg-2 control-label">Hora Cita:*</label>
+				<div class="col-md-4">
+					<input type="time" name="citHoraInicio" required class="form-control" id="citHoraInicio" placeholder="hh:mm">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputEmail1" class="col-lg-2 control-label">Estado:*</label>
+				<div class="col-md-6">
+				<label class="checkbox-inline">
+					<input type="radio" id="inlineCheckbox1" name="activo" required value="1"> Activo
+				</label>
+				<label class="checkbox-inline">
+					<input type="radio" id="inlineCheckbox2" name="activo" required value="2"> Inactivo
+				</label>
+			</div>
+		</div>
+		<p class="alert alert-info">* Campos obligatorios</p>
+		<div class="form-group">
+			<div class="col-lg-offset-2 col-lg-10">
+				<input type="hidden" name="paciente" value="<?php echo $paciente->pacIdPaciente;?>">	
+				<input type="hidden" name="medico" value="<?php echo $medico->medIdMedico;?>">	
+				<button type="submit" class="btn btn-primary">Agregar Cita</button>
+			</div>
+		</div>
+		</form>
+		</div>
+	</div>
+	<?php
+	}
+	else
+	{
+		View::Error("<b>Error!!!<br></b>El usuario <b>".$user."</b> no esta autorizado para emplear esta opción.<br><a href='index.php?view=home'>Inicio</a>");
+	}
+}
+else
+{
+	View::Error("<b>Error!!!<br></b>No puede emplear el sistema sin iniciar sesión.<br><a href='index.php'>Inicio</a>");
+}
+?>
